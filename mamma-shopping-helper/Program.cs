@@ -1,3 +1,4 @@
+using mamma_shopping_helper.Service;
 using Microsoft.EntityFrameworkCore;
 
 namespace mamma_shopping_helper
@@ -25,7 +26,29 @@ namespace mamma_shopping_helper
                             errorNumbersToAdd: null);
                     }));
 
+
+            builder.Services.AddScoped<IListeDellaSpesaService, ListeDellaSpesaService>();
+
+            builder.Services.AddScoped<IProdottoService, ProdottoService>();
+
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins(
+                            "http://localhost:4200", 
+                            "https://localhost:4200")
+                        .AllowAnyMethod()                
+                        .AllowAnyHeader()                
+                        .AllowCredentials();      
+                });
+            });
+
+
             var app = builder.Build();
+
+            app.UseCors("AllowFrontend");
 
             // Verifica connessione al database all'avvio
             using (var scope = app.Services.CreateScope())
@@ -41,6 +64,8 @@ namespace mamma_shopping_helper
                     Console.WriteLine($"? Errore connessione database: {ex.Message}");
                 }
             }
+
+
 
             // Configure the HTTP request pipeline
             if (app.Environment.IsDevelopment())
