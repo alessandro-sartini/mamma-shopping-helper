@@ -1,1 +1,30 @@
-<p>user-name-modal works!</p>
+<div class="modal-overlay">
+  <div class="modal-content">
+    <h1>🛒 Benvenuto!</h1>
+    <p>Per iniziare, inserisci il tuo nome:</p>
+    
+    <form (ngSubmit)="onSubmit()">
+      <input 
+        type="text" 
+        [(ngModel)]="userName"
+        name="userName"
+        placeholder="Es: Mario"
+        class="input-name"
+        minlength="2"
+        maxlength="100"
+        required
+        autofocus
+      />
+      @if(errorMessage){
+      <p class="error">{{ errorMessage }}</p>
+      }
+      <button type="submit" class="btn-submit">
+        Inizia
+      </button>
+    </form>
+    
+    <p class="info-text">
+      Il tuo nome serve per identificare chi aggiunge i prodotti
+    </p>
+  </div>
+</div>
