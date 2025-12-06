@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace mamma_shopping_helper.Model
 {
@@ -31,6 +32,7 @@ namespace mamma_shopping_helper.Model
         public int ListaDellaSpesaId { get; set; }
 
         [ForeignKey("ListaDellaSpesaId")]
+        [JsonIgnore]
         public ListaDellaSpesa ListaDellaSpesa { get; set; }
     }
 }

@@ -1,30 +1,26 @@
 
 
-<!-- 1. MODAL: Appare solo se showUserNameModal = true -->
+<!-- Modal nome utente -->
 @if (showUserNameModal) {
   <app-user-name-modal 
     (userNameSubmitted)="onUserNameSubmitted($event)">
   </app-user-name-modal>
 }
 
-<!-- 2. APP: Appare solo se showUserNameModal = false -->
+<!-- App principale -->
 @if (!showUserNameModal) {
   <div class="app-container">
-    <header class="app-header">
-      <h1>🛒 {{ title }}</h1>
-      <div class="user-info">
-        <span>👤 {{ currentUserName }}</span>
-        <button (click)="changeUserName()" class="btn-change">
-          Cambia Nome
-        </button>
-      </div>
-    </header>
+    
+    <!-- Header Component -->
+    <app-header 
+      [userName]="currentUserName"
+      (changeUserRequested)="onChangeUserRequested()">
+    </app-header>
 
+    <!-- Contenuto dinamico (routing) -->
     <main class="app-main">
-      <h2>Benvenuto, {{ currentUserName }}! 🎉</h2>
-      <p>Qui andrà la lista delle tue liste della spesa...</p>
-      
       <router-outlet></router-outlet>
     </main>
+    
   </div>
 }

@@ -1,1 +1,91 @@
-<p>lista-form works!</p>
+<div class="form-container">
+  
+  <div class="form-card">
+    
+    <div class="form-header">
+      <h2>
+        @if (isEditMode) {
+          ✏️ Modifica Lista
+        } @else {
+          ➕ Nuova Lista
+        }
+      </h2>
+    </div>
+
+    @if (loading) {
+      <div class="loading">
+        <p>⏳ Caricamento...</p>
+      </div>
+    }
+
+    @if (!loading) {
+      <form (ngSubmit)="onSubmit()">
+        
+        <div class="form-group">
+          <label for="titolo">Titolo *</label>
+          <input 
+            type="text" 
+            id="titolo"
+            [(ngModel)]="titolo"
+            name="titolo"
+            placeholder="Es: Spesa settimanale"
+            required
+            minlength="3"
+            maxlength="100"
+            autofocus
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="descrizione">Descrizione (opzionale)</label>
+          <textarea 
+            id="descrizione"
+            [(ngModel)]="descrizione"
+            name="descrizione"
+            placeholder="Es: Spesa grande del sabato"
+            rows="3"
+            maxlength="500"
+          ></textarea>
+        </div>
+
+        <!-- Conclusa (solo in edit) -->
+        @if (isEditMode) {
+          <div class="form-group checkbox-group">
+            <label>
+              <input 
+                type="checkbox"
+                [(ngModel)]="conclusa"
+                name="conclusa"
+              />
+              <span>Lista conclusa</span>
+            </label>
+          </div>
+        }
+
+        <!-- Errore -->
+        @if (error) {
+          <div class="error-message">
+            ❌ {{ error }}
+          </div>
+        }
+
+        <!-- Buttons -->
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="onCancel()">
+            Annulla
+          </button>
+          <button type="submit" class="btn-submit" [disabled]="loading">
+            @if (isEditMode) {
+              💾 Salva Modifiche
+            } @else {
+              ➕ Crea Lista
+            }
+          </button>
+        </div>
+
+      </form>
+    }
+
+  </div>
+
+</div>

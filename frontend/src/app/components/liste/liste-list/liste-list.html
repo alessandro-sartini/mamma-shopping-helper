@@ -1,1 +1,83 @@
-<p>liste-list works!</p>
+<div class="liste-container">
+  <!-- Header + Bottone Nuova Lista -->
+  <div class="liste-header">
+    <h2>Le Tue Liste della Spesa</h2>
+    <button class="btn-new" routerLink="/lista/new">+ Nuova Lista</button>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+  <div class="loading">
+    <p>⏳ Caricamento liste...</p>
+  </div>
+  }
+
+  <!-- Errore -->
+  @if (error) {
+  <div class="error-box">
+    <p>❌ {{ error }}</p>
+    <button (click)="loadListe()">Riprova</button>
+  </div>
+  }
+
+  <!-- Liste -->
+  @if (!loading && !error) {
+
+  <!-- Nessuna lista -->
+  @if (liste.length === 0) {
+  <div class="empty-state">
+    <p>📝 Non hai ancora liste della spesa</p>
+    <button class="btn-primary" routerLink="/lista/new">Crea la Prima Lista</button>
+  </div>
+  }
+
+  <!-- Grid Liste -->
+  @if (liste.length > 0) {
+  <div class="liste-grid">
+    @for (lista of liste; track lista.id) {
+    <div class="lista-card" [routerLink]="['/lista', lista.id]">
+      <!-- Header Card -->
+      <div class="card-header">
+        <h3>{{ lista.titolo }}</h3>
+        @if (lista.conclusa) {
+        <span class="badge-conclusa">✓ CONCLUSA</span>
+        }
+      </div>
+
+      <!-- Descrizione -->
+      @if (lista.descrizione) {
+      <p class="card-description">{{ lista.descrizione }}</p>
+      }
+
+      <!-- Progress Bar -->
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="getProgressPercent(lista)"></div>
+        </div>
+        <span class="progress-text">
+          {{ getProdottiAcquistati(lista) }} / {{ lista.prodotti.length }} prodotti
+        </span>
+      </div>
+
+      <!-- Info -->
+      <div class="card-info">
+        <span class="card-date">📅 {{ lista.dataCreazione | date : 'dd/MM/yyyy' }}</span>
+      </div>
+
+      <!-- Actions -->
+      <div class="card-actions">
+        <button class="btn-edit" (click)="editLista(lista.id, $event)">✏️ Modifica</button>
+        <button
+          class="btn-toggle"
+          (click)="toggleConclusa(lista.id, $event)"
+          [class.active]="lista.conclusa"
+        >
+          @if (lista.conclusa) { 🔓 Riapri } @else { ✓ Completa }
+        </button>
+        <button class="btn-delete" (click)="deleteLista(lista.id, $event)">🗑️ Elimina</button>
+      </div>
+    </div>
+    }
+  </div>
+  } }
+</div>

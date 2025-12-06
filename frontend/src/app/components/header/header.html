@@ -1,1 +1,12 @@
-<p>header works!</p>
+<header class="app-header">
+  <div class="header-left">
+    <h1>🛒 Mamma Shopping Helper</h1>
+  </div>
+  
+  <div class="header-right">
+    <span class="user-badge">👤 {{ userName }}</span>
+    <button class="btn-change-user" (click)="onChangeUser()">
+      🔄 Cambia Nome
+    </button>
+  </div>
+</header>

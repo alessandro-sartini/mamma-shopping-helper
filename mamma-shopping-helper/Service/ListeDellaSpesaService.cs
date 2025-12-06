@@ -17,6 +17,7 @@ namespace mamma_shopping_helper.Service
         public async Task<IEnumerable<ListaDellaSpesa>> GetAllListeAsync()
         {
             return await _context.ListeDellaSpesa
+                .Include(l => l.Prodotti)
                 .OrderByDescending(l => l.DataCreazione)
                 .ToListAsync();
         }
@@ -64,10 +65,8 @@ namespace mamma_shopping_helper.Service
             return true;
         }
 
-     
         public async Task<bool> ToggleConclusaAsync(int id)
         {
-        
             var lista = await _context.ListeDellaSpesa.FindAsync(id);
 
             if (lista == null)
@@ -78,7 +77,5 @@ namespace mamma_shopping_helper.Service
             await _context.SaveChangesAsync();
             return true;
         }
-
-      
     }
 }
