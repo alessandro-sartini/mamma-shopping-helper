@@ -121,37 +121,20 @@ Applicazione web single-page costruita con Angular 19.
 
 - **Dashboard**: Panoramica generale con statistiche e liste attive
 - **Gestione Prodotti**: CRUD completo per prodotti con filtri per categoria
-- **Gestione Categorie**: Creazione e organizzazione categorie
-- **Liste della Spesa**: Creazione e gestione liste con tracking degli acquisti
-- **Ricettario**: Gestione ricette con ingredienti e istruzioni
+- **Liste della Spesa**: Creazione e gestione liste.
 
-#### Struttura Componenti
 
-```
-src/
-├── app/
-│   ├── components/        # Componenti UI
-│   ├── services/          # Servizi per chiamate API
-│   ├── models/            # Interfacce TypeScript
-│   ├── guards/            # Route guards
-│   └── interceptors/      # HTTP interceptors
-```
-
-## Dipendenze
 
 ### Backend
 
 - Microsoft.EntityFrameworkCore.SqlServer (8.0.x)
 - Microsoft.EntityFrameworkCore.Tools (8.0.x)
-- Microsoft.AspNetCore.OpenApi
-- Swashbuckle.AspNetCore
 
 ### Frontend
 
 - Angular 19.x
 - TypeScript 5.6
 - RxJS 7.8
-- Bootstrap (opzionale, se presente)
 
 ## Testing API
 
@@ -159,7 +142,7 @@ Durante lo sviluppo puoi testare le API usando:
 
 1. **Swagger UI** - Naviga a `https://localhost:[porta]/swagger` quando l'API è in esecuzione
 2. **Postman** - Importa gli endpoint dalla documentazione Swagger
-3. **Visual Studio HTTP Client** - Usa il file `mamma-shopping-helper.http` incluso nel progetto
+
 
 ## Configurazione CORS
 
@@ -175,28 +158,10 @@ builder.Services.AddCors(options =>
 });
 ```
 
-## Build per Produzione
-
-### Backend
-
-```
-dotnet publish -c Release -o ./publish
-```
-
-### Frontend
-
-```
-cd frontend
-ng build --configuration production
-```
-
-I file compilati saranno disponibili in `frontend/dist/`
 
 ## Link Utili
 
 - Repository GitHub: [https://github.com/alessandro-sartini/mamma-shopping-helper](https://github.com/alessandro-sartini/mamma-shopping-helper)
-- Documentazione Angular: [https://angular.dev](https://angular.dev)
-- Documentazione ASP.NET Core: [https://learn.microsoft.com/aspnet/core](https://learn.microsoft.com/aspnet/core)
 
 ## Autore
 
