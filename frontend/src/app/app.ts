@@ -1,14 +1,13 @@
-// src/app/app.ts
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UserService } from './../../services/user';
+import { UserService } from './services/userService';
 import { UserNameModal } from './components/user-name-modal/user-name-modal';
-import { Header } from './components/header/header';  // ⬅️ IMPORT HEADER
+import { Header } from './components/header/header';  
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, UserNameModal, Header],  // ⬅️ AGGIUNGI Header
+  imports: [RouterOutlet, UserNameModal, Header],  
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
