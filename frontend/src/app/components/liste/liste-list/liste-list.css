@@ -151,7 +151,7 @@
   margin-top: 1rem;
 }
 
-.btn-toggle, .btn-delete {
+.btn-toggle, .btn-delete, .btn-edit {
   flex: 1;
   padding: 0.5rem;
   border: none;
@@ -161,6 +161,17 @@
   cursor: pointer;
   transition: all 0.2s;
 }
+
+.btn-edit {
+  background: #ecf0f1;
+  color: #666;
+}
+
+.btn-edit:hover {
+  background: #7327ae;
+  color: white;
+}
+
 
 .btn-toggle {
   background: #ecf0f1;

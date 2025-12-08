@@ -105,12 +105,42 @@ namespace mamma_shopping_helper.Service
         public async Task<bool> ToggleAcquistatoAsync(int id)
         {
             var prodotto = await _context.Prodotti.FindAsync(id);
+
             if (prodotto == null)
                 return false;
 
             prodotto.Acquistato = !prodotto.Acquistato;
+
             await _context.SaveChangesAsync();
+
+            await CheckAndCompleteLista(prodotto.ListaDellaSpesaId);
+
             return true;
+        }
+
+        // autocompleto la lista se tutti prodotti comprati
+        private async Task CheckAndCompleteLista(int listaId)
+        {
+            var lista = await _context.ListeDellaSpesa
+                .Include(l => l.Prodotti)
+                .FirstOrDefaultAsync(l => l.Id == listaId);
+
+            if (lista == null || lista.Prodotti.Count == 0)
+                return;
+
+            // Controlla se TUTTI sono acquistati
+            bool tuttiAcquistati = lista.Prodotti.All(p => p.Acquistato);
+
+            if (tuttiAcquistati && !lista.Conclusa)
+            {
+                lista.Conclusa = true;
+                await _context.SaveChangesAsync();
+            }
+            else if (!tuttiAcquistati && lista.Conclusa)
+            {
+                lista.Conclusa = false;
+                await _context.SaveChangesAsync();
+            }
         }
 
         // Incrementa quantità
