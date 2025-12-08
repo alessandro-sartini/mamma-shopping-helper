@@ -19,7 +19,11 @@ namespace mamma_shopping_helper.Model
 
         public bool Conclusa { get; set; } = false;
 
-       
+        public DateTime DataUltimaModifica { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string CreataDa { get; set; } = string.Empty;
         public ICollection<Prodotto> Prodotti { get; set; } = [];
     }
 }

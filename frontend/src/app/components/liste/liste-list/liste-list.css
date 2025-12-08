@@ -132,16 +132,36 @@
   color: #666;
 }
 
-/* Card Info */
+/* ========== CARD INFO SECTION (AGGIORNATA) ========== */
 .card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
   margin: 1rem 0;
   padding-top: 1rem;
-  border-top: 1px solid #ecf0f1;
+  border-top: 1px solid #e5e7eb;
 }
 
 .card-date {
   font-size: 0.85rem;
-  color: #999;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.card-user {
+  font-size: 0.85rem;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.2rem;
+}
+
+.card-user strong {
+  color: #1e40af;
+  font-weight: 600;
 }
 
 /* Actions */
@@ -172,7 +192,6 @@
   color: white;
 }
 
-
 .btn-toggle {
   background: #ecf0f1;
   color: #666;
@@ -198,6 +217,7 @@
   color: white;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .liste-header {
     flex-direction: column;

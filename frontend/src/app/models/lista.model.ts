@@ -5,13 +5,17 @@ export interface ListaDellaSpesa {
   titolo: string;
   descrizione?: string;
   dataCreazione: string;
+  dataUltimaModifica: string;
   conclusa: boolean;
+  creataDa: string;          
   prodotti: Prodotto[];
 }
 
 export interface CreateListaDto {
   titolo: string;
   descrizione?: string;
+  creataDa?: string; 
+
 }
 
 export interface UpdateListaDto {
@@ -19,5 +23,3 @@ export interface UpdateListaDto {
   descrizione?: string;
   conclusa: boolean;
 }
-
-

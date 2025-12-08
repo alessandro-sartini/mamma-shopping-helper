@@ -17,12 +17,30 @@ namespace mamma_shopping_helper.Controllers
             _service = service;
         }
 
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<ListaDellaSpesa>>> GetListeDellaSpesa()
+        //{
+        //    var liste = await _service.GetAllListeAsync();
+        //    return Ok(liste);
+        //}
+
+
+
+
+
+        // GET: api/ListeDellaSpesa?orderBy=DataCreazione&ascending=false&creataDa=Mario
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ListaDellaSpesa>>> GetListeDellaSpesa()
+        public async Task<ActionResult<IEnumerable<ListaDellaSpesa>>> GetListeDellaSpesa(
+          [FromQuery] string? orderBy = "DataCreazione",
+          [FromQuery] bool ascending = false,
+          [FromQuery] string? creataDa = null,
+          [FromQuery] bool? conclusa = null) 
         {
-            var liste = await _service.GetAllListeAsync();
+            var liste = await _service.GetAllListeAsync(orderBy, ascending, creataDa, conclusa);
             return Ok(liste);
         }
+
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ListaDellaSpesa>> GetListaDellaSpesa(int id)
@@ -45,7 +63,8 @@ namespace mamma_shopping_helper.Controllers
             var lista = new ListaDellaSpesa
             {
                 Titolo = dto.Titolo,
-                Descrizione = dto.Descrizione
+                Descrizione = dto.Descrizione,
+                CreataDa = dto.CreataDa
             };
 
             try
@@ -66,17 +85,18 @@ namespace mamma_shopping_helper.Controllers
 
         // PUT: api/ListeDellaSpesa/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateListaDellaSpesa(int id, UpdateListaDellaSpesaDto dto)  // ⬅️ DTO
+        public async Task<IActionResult> UpdateListaDellaSpesa(int id, UpdateListaDellaSpesaDto dto)  
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var lista = new ListaDellaSpesa
             {
-                Id = id,  // ⬅️ Id dall'URL
+                Id = id, 
                 Titolo = dto.Titolo,
                 Descrizione = dto.Descrizione,
-                Conclusa = dto.Conclusa
+                Conclusa = dto.Conclusa,
+                CreataDa = dto.CreataDa ?? "Guest"
             };
 
             try

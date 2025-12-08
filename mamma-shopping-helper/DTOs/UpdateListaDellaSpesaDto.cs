@@ -13,6 +13,8 @@ namespace mamma_shopping_helper.DTOs
 
         [Required]
         public bool Conclusa { get; set; }
+        [MaxLength(100)]
+        public string? CreataDa { get; set; }
 
     }
 }

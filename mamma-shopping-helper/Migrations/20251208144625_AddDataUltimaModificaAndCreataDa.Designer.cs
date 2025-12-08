@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mamma_shopping_helper.Data;
 
@@ -11,9 +12,11 @@ using mamma_shopping_helper.Data;
 namespace mamma_shopping_helper.Migrations
 {
     [DbContext(typeof(MammaDbContext))]
-    partial class MammaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251208144625_AddDataUltimaModificaAndCreataDa")]
+    partial class AddDataUltimaModificaAndCreataDa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListaService } from '../../../services/lista';
+import { UserService } from '../../../services/userService';
 import { CreateListaDto, UpdateListaDto } from '../../../models/lista.model';
 
 @Component({
@@ -24,6 +25,7 @@ export class ListaForm implements OnInit {
 
   constructor(
     private listaService: ListaService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -76,24 +78,34 @@ export class ListaForm implements OnInit {
     }
   }
 
-  createLista(): void {
-    const dto: CreateListaDto = {
-      titolo: this.titolo.trim(),
-      descrizione: this.descrizione.trim() || undefined
-    };
+ createLista(): void {
+  // ⬅️ DEBUG: vedi cosa legge
+  const userName = this.userService.getUserName() || 'Guest';
+  console.log('🔍 userName letto da localStorage:', userName);
+  console.log('🔍 userName è vuoto?', !userName);
+  console.log('🔍 userName dopo trim:', userName.trim());
 
-    this.listaService.createLista(dto).subscribe({
-      next: (nuovaLista) => {
-        console.log('Lista creata:', nuovaLista);
-        this.router.navigate(['/']); 
-      },
-      error: (err) => {
-        this.error = 'Errore creazione lista';
-        this.loading = false;
-        console.error('Errore:', err);
-      }
-    });
-  }
+  const dto: CreateListaDto = {
+    titolo: this.titolo.trim(),
+    descrizione: this.descrizione.trim() || undefined,
+    creataDa: userName
+  };
+
+  console.log('📤 DTO completo inviato al backend:', JSON.stringify(dto, null, 2));
+
+  this.listaService.createLista(dto).subscribe({
+    next: (nuovaLista) => {
+      console.log('✅ Lista ricevuta dal backend:', JSON.stringify(nuovaLista, null, 2));
+      this.router.navigate(['/']); 
+    },
+    error: (err) => {
+      this.error = 'Errore creazione lista';
+      this.loading = false;
+      console.error('❌ Errore:', err);
+    }
+  });
+}
+
 
   updateLista(): void {
     if (!this.listaId) return;

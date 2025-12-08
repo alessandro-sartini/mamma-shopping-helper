@@ -1,6 +1,6 @@
 
 
-/* ======== CSS RESET ========== */
+/* ========  RESET ========== */
 * {
   margin: 0;
   padding: 0;
@@ -21,46 +21,36 @@ body {
   line-height: 1.6;
 }
 
-/* Rimuovi margini default da headings */
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
 }
 
-/* Rimuovi margini da paragrafi */
 p {
   margin: 0;
   padding: 0;
 }
 
-/* Rimuovi margini da liste */
 ul, ol {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-
-/* Link senza underline di default */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* Button reset */
 button {
   font-family: inherit;
   cursor: pointer;
 }
 
-/* Input reset */
 input, textarea, select {
   font-family: inherit;
   font-size: inherit;
 }
 
-/* ========== APP STYLES ========== */
-
-/* Container generale */
 .app-container {
   min-height: 100vh;
   width: 100%;

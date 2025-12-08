@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using mamma_shopping_helper.Data;
+﻿using mamma_shopping_helper.Data;
 using mamma_shopping_helper.Model;
-using mamma_shopping_helper.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace mamma_shopping_helper.Service
 {
@@ -14,13 +13,46 @@ namespace mamma_shopping_helper.Service
             _context = context;
         }
 
-        public async Task<IEnumerable<ListaDellaSpesa>> GetAllListeAsync()
+        public async Task<IEnumerable<ListaDellaSpesa>> GetAllListeAsync(
+         string? orderBy = "DataCreazione",
+         bool ascending = false,
+         string? creataDa = null,
+         bool? conclusa = null) 
         {
-            return await _context.ListeDellaSpesa
+            var query = _context.ListeDellaSpesa
                 .Include(l => l.Prodotti)
-                .OrderByDescending(l => l.DataCreazione)
-                .ToListAsync();
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(creataDa))
+            {
+                query = query.Where(l => l.CreataDa == creataDa);
+            }
+
+            if (conclusa.HasValue)
+            {
+                query = query.Where(l => l.Conclusa == conclusa.Value);
+            }
+
+            query = orderBy?.ToLower() switch
+            {
+                "datacreazione" => ascending
+                    ? query.OrderBy(l => l.DataCreazione)
+                    : query.OrderByDescending(l => l.DataCreazione),
+
+                "dataultimamodifica" => ascending
+                    ? query.OrderBy(l => l.DataUltimaModifica)
+                    : query.OrderByDescending(l => l.DataUltimaModifica),
+
+                "titolo" => ascending
+                    ? query.OrderBy(l => l.Titolo)
+                    : query.OrderByDescending(l => l.Titolo),
+
+                _ => query.OrderByDescending(l => l.DataCreazione)
+            };
+
+            return await query.ToListAsync();
         }
+
 
         public async Task<ListaDellaSpesa?> GetListaByIdAsync(int id)
         {
@@ -32,7 +64,14 @@ namespace mamma_shopping_helper.Service
         public async Task<ListaDellaSpesa> CreateListaAsync(ListaDellaSpesa lista)
         {
             lista.DataCreazione = DateTime.Now;
+            lista.DataUltimaModifica = DateTime.Now;
             lista.Conclusa = false;
+
+            // Se CreataDa vuoto, imposta Guest
+            if (string.IsNullOrWhiteSpace(lista.CreataDa))
+            {
+                lista.CreataDa = "Guest";
+            }
 
             _context.ListeDellaSpesa.Add(lista);
             await _context.SaveChangesAsync();
@@ -43,25 +82,29 @@ namespace mamma_shopping_helper.Service
         public async Task<bool> UpdateListaAsync(int id, ListaDellaSpesa lista)
         {
             var listaEsistente = await _context.ListeDellaSpesa.FindAsync(id);
+
             if (listaEsistente == null)
                 return false;
 
             listaEsistente.Titolo = lista.Titolo;
             listaEsistente.Descrizione = lista.Descrizione;
             listaEsistente.Conclusa = lista.Conclusa;
-
+            listaEsistente.DataUltimaModifica = DateTime.Now; 
             await _context.SaveChangesAsync();
+
             return true;
         }
 
         public async Task<bool> DeleteListaAsync(int id)
         {
             var lista = await _context.ListeDellaSpesa.FindAsync(id);
+
             if (lista == null)
                 return false;
 
             _context.ListeDellaSpesa.Remove(lista);
             await _context.SaveChangesAsync();
+
             return true;
         }
 
@@ -73,8 +116,10 @@ namespace mamma_shopping_helper.Service
                 return false;
 
             lista.Conclusa = !lista.Conclusa;
+            lista.DataUltimaModifica = DateTime.Now; 
 
             await _context.SaveChangesAsync();
+
             return true;
         }
     }
