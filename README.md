@@ -6,9 +6,9 @@
 
 Prima di iniziare, assicurati di avere installato:
 
-- Visual Studio 2022 (Community o superiore)
+- Visual Studio 2022
 - .NET 8.0 SDK
-- SQL Server Express (o versione completa)
+- SQL Server Express 
 - Node.js (v18 o superiore) e npm
 - Angular CLI (`npm install -g @angular/cli`)
 - Git
@@ -78,40 +78,33 @@ Web API REST costruita con ASP.NET Core 8.0.
 
 #### Endpoint Principali
 
-**Prodotti**
-- `GET /api/Products` - Lista tutti i prodotti
-- `GET /api/Products/{id}` - Dettaglio prodotto specifico
-- `POST /api/Products` - Crea nuovo prodotto
-- `PUT /api/Products/{id}` - Aggiorna prodotto
-- `DELETE /api/Products/{id}` - Elimina prodotto
 
-**Categorie**
-- `GET /api/Categories` - Lista tutte le categorie
-- `POST /api/Categories` - Crea nuova categoria
-- `PUT /api/Categories/{id}` - Aggiorna categoria
-- `DELETE /api/Categories/{id}` - Elimina categoria
+### Liste della Spesa
 
-**Liste della Spesa**
-- `GET /api/ShoppingLists` - Lista tutte le liste
-- `GET /api/ShoppingLists/{id}` - Dettaglio lista specifica
-- `POST /api/ShoppingLists` - Crea nuova lista
-- `PUT /api/ShoppingLists/{id}` - Aggiorna lista
-- `DELETE /api/ShoppingLists/{id}` - Elimina lista
+- `GET /api/ListeDellaSpesa` - Recupera tutte le liste della spesa con filtri opzionali
+  - Query params: `orderBy` (default: "DataCreazione"), `ascending` (default: false), `creataDa`, `conclusa`
+- `GET /api/ListeDellaSpesa/{id}` - Recupera dettaglio lista specifica per ID
+- `POST /api/ListeDellaSpesa` - Crea una nuova lista della spesa
+- `PUT /api/ListeDellaSpesa/{id}` - Aggiorna una lista esistente
+- `DELETE /api/ListeDellaSpesa/{id}` - Elimina una lista della spesa
+- `PUT /api/ListeDellaSpesa/{id}/conclusa` - Alterna lo stato "conclusa" di una lista
 
-**Ricette**
-- `GET /api/Recipes` - Lista tutte le ricette
-- `GET /api/Recipes/{id}` - Dettaglio ricetta specifica
-- `POST /api/Recipes` - Crea nuova ricetta
-- `PUT /api/Recipes/{id}` - Aggiorna ricetta
-- `DELETE /api/Recipes/{id}` - Elimina ricetta
+### Prodotti
 
-#### Modello Dati
+- `GET /api/Prodotti` - Recupera tutti i prodotti
+- `GET /api/Prodotti/{id}` - Recupera dettaglio prodotto specifico per ID
+- `GET /api/Prodotti/lista/{listId}` - Recupera tutti i prodotti di una lista specifica
+- `GET /api/Prodotti/utente/{userName}` - Recupera tutti i prodotti aggiunti da un utente specifico
+- `POST /api/Prodotti` - Crea un nuovo prodotto
+- `PUT /api/Prodotti/{id}` - Aggiorna un prodotto esistente
+- `DELETE /api/Prodotti/{id}` - Elimina un prodotto
+- `PUT /api/Prodotti/{id}/acquistato` - Alterna lo stato "acquistato" di un prodotto
+- `PUT /api/Prodotti/{id}/incrementa-quantita` - Incrementa la quantità di un prodotto
+  - Query param: `quantita` (default: 1, max: 100)
+- `PUT /api/Prodotti/{id}/decrementa-quantita` - Decrementa la quantità di un prodotto
+  - Query param: `quantita` (default: 1, max: 100)
 
-- **Product**: Id, Name, CategoryId, Unit, Notes, CreatedAt, UpdatedAt
-- **Category**: Id, Name, Description, Products
-- **ShoppingList**: Id, Name, CreatedAt, Items, IsCompleted
-- **ShoppingListItem**: Id, ProductId, Quantity, IsPurchased
-- **Recipe**: Id, Name, Description, Instructions, Ingredients
+
 
 ### Frontend: Angular Application
 
