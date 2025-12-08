@@ -54,7 +54,7 @@ export class ListaForm implements OnInit {
       error: (err) => {
         this.error = 'Errore caricamento lista';
         this.loading = false;
-        console.error('❌ Errore:', err);
+        console.error('Errore:', err);
       }
     });
   }
@@ -84,13 +84,13 @@ export class ListaForm implements OnInit {
 
     this.listaService.createLista(dto).subscribe({
       next: (nuovaLista) => {
-        console.log('✅ Lista creata:', nuovaLista);
+        console.log('Lista creata:', nuovaLista);
         this.router.navigate(['/']); 
       },
       error: (err) => {
         this.error = 'Errore creazione lista';
         this.loading = false;
-        console.error('❌ Errore:', err);
+        console.error('Errore:', err);
       }
     });
   }
@@ -106,13 +106,13 @@ export class ListaForm implements OnInit {
 
     this.listaService.updateLista(this.listaId, dto).subscribe({
       next: () => {
-        console.log('✅ Lista aggiornata');
+        console.log('Lista aggiornata');
         this.router.navigate(['/']); 
       },
       error: (err) => {
         this.error = 'Errore aggiornamento lista';
         this.loading = false;
-        console.error('❌ Errore:', err);
+        console.error('Errore:', err);
       }
     });
   }

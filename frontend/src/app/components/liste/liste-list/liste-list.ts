@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router } from '@angular/router';  // ⬅️ AGGIUNGI Router
+import { RouterLink, Router } from '@angular/router';  
 import { ListaService } from '../../../services/lista';
 import { ListaDellaSpesa } from '../../../models/lista.model';
 
@@ -18,7 +18,7 @@ export class ListeList implements OnInit {
 
   constructor(
     private listaService: ListaService,
-    private router: Router  // ⬅️ AGGIUNGI Router
+    private router: Router  
   ) {}
 
   ngOnInit(): void {
@@ -32,12 +32,12 @@ export class ListeList implements OnInit {
       next: (data) => {
         this.liste = data;
         this.loading = false;
-        console.log('✅ Liste caricate:', data);
+        console.log('Liste caricate:', data);
       },
       error: (err) => {
         this.error = 'Errore caricamento liste';
         this.loading = false;
-        console.error('❌ Errore:', err);
+        console.error('Errore:', err);
       }
     });
   }
@@ -55,12 +55,12 @@ export class ListeList implements OnInit {
 
     this.listaService.deleteLista(id).subscribe({
       next: () => {
-        console.log('✅ Lista eliminata:', id);
+        console.log('Lista eliminata:', id);
         this.loadListe(); 
       },
       error: (err) => {
         alert('Errore eliminazione lista');
-        console.error('❌ Errore:', err);
+        console.error('Errore:', err);
       }
     });
   }
@@ -70,12 +70,12 @@ export class ListeList implements OnInit {
 
     this.listaService.toggleConclusa(id).subscribe({
       next: () => {
-        console.log('✅ Lista conclusa toggled:', id);
+        console.log('Lista conclusa toggled:', id);
         this.loadListe();
       },
       error: (err) => {
         alert('Errore aggiornamento lista');
-        console.error('❌ Errore:', err);
+        console.error('Errore:', err);
       }
     });
   }

@@ -8,7 +8,7 @@ export class UserService {
 
   constructor() { }
 
-  // Ottieni nome utente corrente
+  // nome utente corrente
   getUserName(): string | null {
     return localStorage.getItem(this.STORAGE_KEY);
   }
@@ -18,7 +18,7 @@ export class UserService {
     localStorage.setItem(this.STORAGE_KEY, userName.trim());
   }
 
-  // Rimuovi nome utente (reset/logout)
+  // Rimuovi nome utente
   clearUserName(): void {
     localStorage.removeItem(this.STORAGE_KEY);
   }

@@ -1,5 +1,5 @@
 <div class="liste-container">
-  <!-- Header + Bottone Nuova Lista -->
+  <!-- Header + Bottone -->
   <div class="liste-header">
     <h2>Le Tue Liste della Spesa</h2>
     <button class="btn-new" routerLink="/lista/new">+ Nuova Lista</button>
@@ -23,7 +23,7 @@
   <!-- Liste -->
   @if (!loading && !error) {
 
-  <!-- Nessuna lista -->
+  <!-- No lista -->
   @if (liste.length === 0) {
   <div class="empty-state">
     <p>📝 Non hai ancora liste della spesa</p>
@@ -31,7 +31,7 @@
   </div>
   }
 
-  <!-- Grid Liste -->
+  <!-- Liste -->
   @if (liste.length > 0) {
   <div class="liste-grid">
     @for (lista of liste; track lista.id) {
@@ -49,7 +49,7 @@
       <p class="card-description">{{ lista.descrizione }}</p>
       }
 
-      <!-- Progress Bar -->
+      <!-- Progress-->
       <div class="progress-section">
         <div class="progress-bar">
           <div class="progress-fill" [style.width.%]="getProgressPercent(lista)"></div>
@@ -59,7 +59,6 @@
         </span>
       </div>
 
-      <!-- Info -->
       <div class="card-info">
         <span class="card-date">📅 {{ lista.dataCreazione | date : 'dd/MM/yyyy' }}</span>
       </div>

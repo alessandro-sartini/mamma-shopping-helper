@@ -5,34 +5,40 @@ import { Prodotto, CreateProdottoDto, UpdateProdottoDto } from '../models/prodot
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProdottoService {
-  private apiUrl = environment.apiUrl+"Prodotti";
+  private apiUrl = environment.apiUrl + 'Prodotti';
 
   constructor(private http: HttpClient) {}
 
+  // CREATE
   createProdotto(dto: CreateProdottoDto): Observable<Prodotto> {
     return this.http.post<Prodotto>(this.apiUrl, dto);
   }
 
+  // UPDATE
   updateProdotto(id: number, dto: UpdateProdottoDto): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}`, dto);
   }
 
+  // DELETE
   deleteProdotto(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
+  // TOGGLE ACQUISTATO
   toggleAcquistato(id: number): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}/toggle-acquistato`, {});
+    return this.http.put<void>(`${this.apiUrl}/${id}/acquistato`, {}); 
   }
 
-  incrementaQuantita(id: number): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}/incrementa-quantita`, {});
+  // INCREMENTA QUANTITÀ
+  incrementaQuantita(id: number, quantita: number = 1): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}/incrementa-quantita?quantita=${quantita}`, {});
   }
 
-  decrementaQuantita(id: number): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}/decrementa-quantita`, {});
+  // DECREMENTA QUANTITÀ
+  decrementaQuantita(id: number, quantita: number = 1): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}/decrementa-quantita?quantita=${quantita}`, {});
   }
 }

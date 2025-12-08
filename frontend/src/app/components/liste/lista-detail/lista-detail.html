@@ -1,1 +1,158 @@
-<p>lista-detail works!</p>
+<div class="detail-container">
+  <!-- Loading -->
+  @if (loading) {
+  <div class="loading">
+    <p>⏳ Caricamento dettaglio...</p>
+  </div>
+  }
+
+  <!-- Errore -->
+  @if (error) {
+  <div class="error-box">
+    <p>❌ {{ error }}</p>
+    <button (click)="goBack()">Torna Indietro</button>
+  </div>
+  }
+
+  <!-- Dettaglio Lista -->
+  @if (!loading && !error && lista) {
+
+  <!-- Header -->
+  <div class="detail-header">
+    <div class="header-top">
+      <button class="btn-back" (click)="goBack()">← Indietro</button>
+      <button class="btn-edit" (click)="editLista()">✏️ Modifica Lista</button>
+    </div>
+
+    <h1>{{ lista.titolo }}</h1>
+
+    @if (lista.descrizione) {
+    <p class="description">{{ lista.descrizione }}</p>
+    }
+
+    <div class="header-info">
+      <span class="date">📅 {{ lista.dataCreazione | date : 'dd/MM/yyyy' }}</span>
+
+      @if (lista.conclusa) {
+      <span class="badge-conclusa">✓ CONCLUSA</span>
+      }
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-section">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="getProgressPercent()"></div>
+      </div>
+      <span class="progress-text">
+        {{ getProdottiAcquistati() }} / {{ lista.prodotti.length }} prodotti acquistati
+      </span>
+    </div>
+  </div>
+
+  <!-- Form Aggiungi Prodott -->
+  <div class="add-prodotto-form">
+    <h3>📝 Aggiungi Prodotto</h3>
+
+    <div class="form-row">
+      <input
+        type="text"
+        class="input-nome"
+        [(ngModel)]="nuovoProdottoNome"
+        placeholder="Nome prodotto..."
+        (keyup.enter)="aggiungiProdotto()"
+      />
+
+      <input
+        type="number"
+        class="input-quantita"
+        [(ngModel)]="nuovoProdottoQuantita"
+        min="1"
+        max="999"
+      />
+
+      <button class="btn-add" (click)="aggiungiProdotto()" [disabled]="!nuovoProdottoNome.trim()">
+        + Aggiungi
+      </button>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- Lista Prodotti esistenti -->
+  <h2>Prodotti nella Lista</h2>
+
+  <!-- Lista Prodotti -->
+  <div class="prodotti-section">
+    <h2>Prodotti</h2>
+
+    @if (lista.prodotti.length === 0) {
+    <div class="empty-state">
+      <p>📝 Nessun prodotto in questa lista</p>
+    </div>
+    } @if (lista.prodotti.length > 0) {
+    <div class="prodotti-list">
+      @for (prodotto of lista.prodotti; track prodotto.id) {
+      <div class="prodotto-item" [class.acquistato]="prodotto.acquistato">
+        <!-- Checkbox -->
+        <div class="prodotto-checkbox">
+          <input
+            type="checkbox"
+            [checked]="prodotto.acquistato"
+            (change)="toggleAcquistato(prodotto.id, $event)"
+          />
+        </div>
+
+        <!-- Info prodotto -->
+        <div class="prodotto-info">
+          <h3>{{ prodotto.nome }}</h3>
+          <div class="prodotto-meta">
+            <span class="utente">👤 {{ prodotto.userName }}</span>
+          </div>
+        </div>
+
+        <!-- Controlli quantità -->
+        <div class="quantity-controls">
+          <button
+            class="btn-quantity"
+            (click)="decrementaQuantita(prodotto.id, $event)"
+            title="Diminuisci quantità"
+          >
+            -
+          </button>
+
+          <span class="current-quantity">{{ prodotto.quantita }}</span>
+
+          <button
+            class="btn-quantity"
+            (click)="incrementaQuantita(prodotto.id, $event)"
+            title="Aumenta quantità"
+          >
+            +
+          </button>
+        </div>
+
+        <!-- Status badge -->
+        <div class="prodotto-status">
+          @if (prodotto.acquistato) {
+          <span class="badge-ok">✓ Acquistato</span>
+          } @else {
+          <span class="badge-pending">⏳ Da acquistare</span>
+          }
+        </div>
+
+        <!-- Elimina -->
+        <button
+          class="btn-delete-prodotto"
+          (click)="deleteProdotto(prodotto.id, $event)"
+          title="Elimina prodotto"
+        >
+          🗑️
+        </button>
+      </div>
+      }
+    </div>
+    }
+  </div>
+
+  }
+</div>
