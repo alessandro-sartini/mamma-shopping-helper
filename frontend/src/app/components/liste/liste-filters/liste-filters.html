@@ -1,0 +1,52 @@
+<div class="filters-container">
+  <h3>🔍 Filtri</h3>
+
+  <div class="filters-grid">
+    <!-- Ordina Per -->
+    <div class="filter-group">
+      <label for="orderBy">Ordina per:</label>
+      <select id="orderBy" [(ngModel)]="orderBy" (change)="applyFilters()">
+        <option value="DataCreazione">Data Creazione</option>
+        <option value="DataUltimaModifica">Data Modifica</option>
+        <option value="Titolo">Titolo</option>
+      </select>
+    </div>
+
+    <!-- Direzione -->
+    <div class="filter-group">
+      <label for="ascending">Direzione:</label>
+      <select id="ascending" [(ngModel)]="ascending" (change)="applyFilters()">
+        <option [ngValue]="false">↓ Decrescente (recenti prima)</option>
+        <option [ngValue]="true">↑ Crescente (vecchi prima)</option>
+      </select>
+    </div>
+
+    <!-- Filtro Utente -->
+    <div class="filter-group">
+      <label for="creataDa">Creata da:</label>
+      <input
+        type="text"
+        id="creataDa"
+        [(ngModel)]="creataDa"
+        placeholder="Es: mario, Guest..."
+        (keyup.enter)="applyFilters()"
+      />
+      <small class="help-text">Premi Invio per cercare</small>
+    </div>
+
+    <!-- Filtro Stato -->
+    <div class="filter-group">
+      <label for="conclusa">Stato:</label>
+      <select id="conclusa" [(ngModel)]="conclusa" (change)="applyFilters()">
+        <option value="tutte">📋 Tutte</option>
+        <option value="aperte">🔓 Solo Aperte</option>
+        <option value="concluse">✅ Solo Concluse</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="filters-actions">
+    <button class="btn-apply" (click)="applyFilters()">✓ Applica Filtri</button>
+    <button class="btn-reset" (click)="resetFilters()">↻ Reset</button>
+  </div>
+</div>

@@ -4,7 +4,8 @@
     <h2>Le Tue Liste della Spesa</h2>
     <button class="btn-new" routerLink="/lista/new">+ Nuova Lista</button>
   </div>
-
+  <!-- filtri -->
+  <app-liste-filters (filtriChange)="onFiltriChange($event)"></app-liste-filters>
   <!-- Loading -->
   @if (loading) {
   <div class="loading">
@@ -59,11 +60,16 @@
         </span>
       </div>
 
-
       <div class="card-info">
-        <span class="card-date">📅 Creata: {{ lista.dataCreazione | date : 'dd/MM/yyyy HH:mm' }}</span>
-        <span class="card-date">🔄 Modificata: {{ lista.dataUltimaModifica | date : 'dd/MM/yyyy HH:mm' }}</span>
-        <span class="card-user">👤 Creata da: <strong>{{ lista.creataDa }}</strong></span>
+        <span class="card-date"
+          >📅 Creata: {{ lista.dataCreazione | date : 'dd/MM/yyyy HH:mm' }}</span
+        >
+        <span class="card-date"
+          >🔄 Modificata: {{ lista.dataUltimaModifica | date : 'dd/MM/yyyy HH:mm' }}</span
+        >
+        <span class="card-user"
+          >👤 Creata da: <strong>{{ lista.creataDa }}</strong></span
+        >
       </div>
 
       <!-- Actions -->

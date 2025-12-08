@@ -79,11 +79,7 @@ export class ListaForm implements OnInit {
   }
 
  createLista(): void {
-  // ⬅️ DEBUG: vedi cosa legge
   const userName = this.userService.getUserName() || 'Guest';
-  console.log('🔍 userName letto da localStorage:', userName);
-  console.log('🔍 userName è vuoto?', !userName);
-  console.log('🔍 userName dopo trim:', userName.trim());
 
   const dto: CreateListaDto = {
     titolo: this.titolo.trim(),
@@ -91,17 +87,16 @@ export class ListaForm implements OnInit {
     creataDa: userName
   };
 
-  console.log('📤 DTO completo inviato al backend:', JSON.stringify(dto, null, 2));
 
   this.listaService.createLista(dto).subscribe({
     next: (nuovaLista) => {
-      console.log('✅ Lista ricevuta dal backend:', JSON.stringify(nuovaLista, null, 2));
+      console.log('Lista ricevuta dal backend:', JSON.stringify(nuovaLista, null, 2));
       this.router.navigate(['/']); 
     },
     error: (err) => {
       this.error = 'Errore creazione lista';
       this.loading = false;
-      console.error('❌ Errore:', err);
+      console.error('Errore:', err);
     }
   });
 }
