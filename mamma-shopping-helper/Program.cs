@@ -1,3 +1,4 @@
+using mamma_shopping_helper.Data;
 using mamma_shopping_helper.Service;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,7 +47,29 @@ namespace mamma_shopping_helper
             });
 
 
+        
+
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<MammaDbContext>();
+
+                    // Applica eventuali migrations pending
+                    context.Database.Migrate();
+
+                    // Popola il database con dati mockup
+                    DbSeeder.SeedData(context);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "Si è verificato un errore durante il seeding del database.");
+                }
+            }
 
             app.UseCors("AllowFrontend");
 
