@@ -57,7 +57,7 @@ npm install
 
 1. Apri la solution `mamma-shopping-helper.sln` in Visual Studio
 2. Imposta il progetto `mamma-shopping-helper` come progetto di avvio
-3. Premi F5 o clicca su "Start" per avviare l'API
+3. Avvia l'API
 4. L'API sarà disponibile su `https://localhost:[porta]`
 
 ### Frontend (Angular)
@@ -157,35 +157,7 @@ builder.Services.AddCors(options =>
 
 Per facilitare i test dell'applicazione, il database viene automaticamente popolato con dati
 
-### Cosa troverai
-
-Nel database di test sono presenti:
-
-- **5 liste della spesa** con scenari realistici:
-  - Lista settimanale della famiglia
-  - Preparazione per una cena speciale
-  - Colazione e merenda dei bambini
-  - Una lista completata (esempio di stato finale)
-  - Ingredienti per pizza fatta in casa
-
-- **42 prodotti** distribuiti nelle liste:
-  - Prodotti in vari stati (acquistati e non)
-  - Diversi utenti che aggiungono elementi
-  - Date di aggiunta variabili per simulare un utilizzo reale
-
-### Se vuoi ricominciare da zero
-
-Per resettare il database e ricaricarlo con i dati di test, esegui semplicemente questo script SQL:
-
-```sql
-DELETE FROM Prodotti;
-DELETE FROM ListeDellaSpesa;
-DBCC CHECKIDENT ('Prodotti', RESEED, 0);
-DBCC CHECKIDENT ('ListeDellaSpesa', RESEED, 0);
-```
-
-Poi riavvia l'applicazione e il seeding automatico ricaricherà i dati di test.
-
+In caso di problemi o nevesita carichero` dati sql.
 
 ## Link Utili
 
