@@ -155,7 +155,7 @@ builder.Services.AddCors(options =>
 
 ## Dati di Test
 
-Per facilitare i test dell'applicazione, il database viene automaticamente popolato con dati di esempio al primo avvio. Non devi fare nulla, tutto funziona in automatico!
+Per facilitare i test dell'applicazione, il database viene automaticamente popolato con dati
 
 ### Cosa troverai
 
