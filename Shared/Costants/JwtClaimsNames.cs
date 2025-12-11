@@ -1,4 +1,4 @@
-namespace Shared.Constants
+namespace Shared.Costants
 {
     public static class JwtClaimNames
     {
